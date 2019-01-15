@@ -38,11 +38,12 @@ FROM flights]]></db:parameterized-query>
 		</db:select>
 		<dw:transform-message doc:name="to JSON">
 			<dw:set-payload><![CDATA[%dw 1.0
-%output application/java
+%output application/json
 ---
 payload]]></dw:set-payload>
 		</dw:transform-message>
 		<object-to-string-transformer doc:name="Object to String" />
+        <set-property propertyName="#[&quot;Content-Type&quot;]" value="#[&quot;application/json&quot;]" doc:name="Property"/>
 		<jms:outbound-endpoint queue="flights"
 			connector-ref="Active_MQ" doc:name="flights" />
 	</flow>
